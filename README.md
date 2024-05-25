@@ -1,12 +1,6 @@
-# TODO Management LineBot Application
 
-##### Tech blog about this project is [here](https://kk1110.netlify.app/posts/linebot)
 
 ## Overview
-
-- TODO Management Application with LineBot
-- If you type completed taskname, the task will be deleted.
-- To delete all your task, please type "クリア" or "clear"
 
 ## Techs
 
@@ -18,11 +12,6 @@
 | Docker     | 20.10.12 |
 | Nginx      | 1.21.6   |
 | Mysql      | 5.7      |
-
-## System Architecture
-
-Made by [Draw.io](https://app.diagrams.net/)
-![](architecture_linebot.drawio.svg)
 
 ## How to run with docker-compose
 
@@ -78,19 +67,3 @@ kubectl apply \
     -f ingress/managed-cert-ingress.yaml
 ```
 
-## Other things you have to do for SSL configration
-
-- Prepare your own domain(like Google Domain)
-- Reserving a static external IP address [link](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address)
-- DNS (DNS A record) setting to connect static external IP address with your domain.
-
-## When you are enough to run..
-
-```
-# Make sure delete cluster not to be billed!
-$ gcloud container clusters delete linebot-gke --zone asia-northeast1-a
-```
-
-## Sample Talk
-
-<img src="https://user-images.githubusercontent.com/25422441/144426698-72fbaea0-514a-4a19-88c8-d9461f88566a.png" width="200px">
