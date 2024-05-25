@@ -1,0 +1,56 @@
+<meta charset="UTF-8" />
+<title>Jimaku</title>
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.13.1/dist/ort.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ricky0123/vad/dist/index.browser.js"></script>
+<script type="module">
+    let result_text
+    try {
+        const myvad = await vad.MicVAD.new({
+        positiveSpeechThreshold: 0.8,
+        negativeSpeechThreshold: 0.8 - 0.15,
+        minSpeechFrames: 5,
+        preSpeechPadFrames: 1,
+        redemptionFrames: 1,
+        onSpeechEnd: async (arr) => {
+            const wavBuffer = vad.utils.encodeWAV(arr)
+            var file = new File([wavBuffer], `file${Date.now()}.wav`)
+            let formData = new FormData()
+            formData.append("file", file)
+            try {
+                const resp_transcribe = await fetch("/api/transcribe", {
+                    method: "POST",
+                    body: formData,
+                })
+                const resp_transcribe_json = await resp_transcribe.json()
+                console.log(resp_transcribe_json.text)
+                result_text = resp_transcribe_json.text;
+                try{
+                    const resp_respond = await fetch("/api/respond_text", {
+                        method: "POST",
+                        body: JSON.stringify({ text: result_text }),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    console.log(result_text);
+                    const resp_respond_json = await resp_respond.json()
+                    console.log(resp_respond_json.text)
+                    result_text = resp_respond_json.text;
+                }catch (err) {
+                    console.log(err)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+            const uttr = new SpeechSynthesisUtterance()
+            uttr.text = result_text
+            // 発言を再生
+            window.speechSynthesis.speak(uttr)
+        },
+    })
+    myvad.start()
+    } catch (e) {
+        console.error("Failed:", e)
+    }
+</script>
+
