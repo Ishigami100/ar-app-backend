@@ -3,6 +3,10 @@ WORKDIR /app
 COPY . /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip3 install --no-cache-dir ffmpeg-python
+# aptパッケージリストの更新とffmpegのインストール
+RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+
 ENV FLASK_APP=app
 ENV FLASK_DEBUG=1
 EXPOSE 5000

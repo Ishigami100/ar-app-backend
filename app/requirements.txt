@@ -1,5 +1,11 @@
-Flask==1.1.4
-line-bot-sdk==2.1.0
-MarkupSafe==2.0.1
-mysql-connector-python==8.0.21
-uWSGI==2.0.19.1
+numpy
+pandas
+python-dotenv
+Flask
+whisper
+requests
+googletrans
+uwsgi
+openai
+ffmpeg-python   
+openai-whisper
