@@ -32,24 +32,24 @@ $ docker-compose down --rmi all --volumes --remove-orphans
 ```
 
 # Create your artifacts repositories on GCP.
-$ gcloud artifacts repositories create linebot-repo \
+$ gcloud artifacts repositories create ar-app-repo \
     --project=gcp-compute-engine-343613 \
     --repository-format=docker \
     --location=asia-northeast1 \
     --description="Docker repository"
 
 # Create your own cluster.
-$ gcloud container clusters create linebot-gke --num-nodes 3 --zone asia-northeast1
+$ gcloud container clusters create ar-app-gke --num-nodes 3 --zone asia-northeast1
 
 # Build image and deploy
 $ pwd
-/path/to/dir/linebot/
+/path/to/dir/ar-app-backend/
 # Flask App image build and push
 $ gcloud builds submit \
-    --tag asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/linebot-repo/app-server:1.0.0 ./app/
+    --tag asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/ar-app/app-server:1.0.0 ./app/
 # Nginx container image build and push
 $ gcloud builds submit \
-    --tag asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/linebot-repo/linebot-nginx:1.0.0 ./web/
+    --tag asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/ar-app/linebot-nginx:1.0.0 ./web/
 
 # Apply each k8s objects
 # Build & Run containers
