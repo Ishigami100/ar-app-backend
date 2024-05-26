@@ -11,6 +11,12 @@ ALLOWED_EXTENSIONS = {"m4a", "mp3", "wav"}
 WHISPER_MODEL_NAME = "small"  # tiny, base, small, medium
 WHISPER_DEVICE = "cpu"  # cpu, cuda
 
+args = {
+    "shell": True,
+    "capture_output": True,
+    "text": True
+}
+
 print("loading whisper model", WHISPER_MODEL_NAME, WHISPER_DEVICE)
 whisper_model = whisper.load_model(WHISPER_MODEL_NAME, device=WHISPER_DEVICE)
 
@@ -47,7 +53,7 @@ def transcribe():
         try:
             # シェルコマンドを実行し、その出力を取得
             command = f"whisper {saved_filename} --language ja"
-            result = subprocess.run(command, shell=True, capture_output=True, text=True)
+            result = subprocess.run(command, **args)
             if result.returncode != 0:
                 raise Exception(f"Whisper command failed: {result.stderr}")
 
