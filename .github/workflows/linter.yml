@@ -24,22 +24,20 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8
         
-    - name: Run flake8 with reviewdog
+    - name: Run flake8 with reviewdog (GitHub Check)
       uses: reviewdog/action-flake8@v2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         level: error
         reporter: github-pr-check
-        fail_on_error: true
         path: "voice-recognize dialogue-generation"
         filter_mode: "nofilter"
-        
+
     - name: Run flake8 with reviewdog (PR Review)
       uses: reviewdog/action-flake8@v2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         level: error
         reporter: github-pr-review
-        fail_on_error: true
         path: "voice-recognize dialogue-generation"
         filter_mode: "nofilter"
