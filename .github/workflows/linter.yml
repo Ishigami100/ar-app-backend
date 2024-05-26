@@ -13,11 +13,11 @@ jobs:
         python-version: [3.9]
     steps:
     - uses: actions/checkout@v4
-          - name: Set up Python ${{ matrix.python-version }} # Python環境のセットアップ
-        uses: actions/setup-python@v4 # Python環境のセットアップアクションを使用
-        with:
+    - name: Set up Python ${{ matrix.python-version }} # Python環境のセットアップ
+      uses: actions/setup-python@v4 # Python環境のセットアップアクションを使用
+      with:
           python-version: ${{ matrix.python-version }} # マトリクスで指定されたPythonバージョンを使用
     - name: Lint
       run: |
         pip install flake8
-        flake8 demo --show-source
+        flake8 ar-app-backend --show-source
