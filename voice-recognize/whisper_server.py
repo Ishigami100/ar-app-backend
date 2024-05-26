@@ -34,10 +34,10 @@ def index():
 @app.route("/api/transcribe", methods=["POST"])
 def transcribe():
     time_sta = time.perf_counter()
-    print("start transcribe " + str(time_sta)) 
+    print("start transcribe " + str(time_sta))
     file = request.files["file"]
     if file and is_allowed_file(file.filename):
-        extension =file.filename.rsplit(".", 1)[1].lower()
+        extension = file.filename.rsplit(".", 1)[1].lower()
         filename = str(int(time.time())) + "." + extension
         print(filename)
         saved_filename = os.path.join(app.config["UPLOAD_FOLDER"], filename)
