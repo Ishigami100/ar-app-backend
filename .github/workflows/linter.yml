@@ -17,8 +17,12 @@ jobs:
       uses: actions/setup-python@v4 # Python環境のセットアップアクションを使用
       with:
           python-version: ${{ matrix.python-version }} # マトリクスで指定されたPythonバージョンを使用
-    - name: Lint
+    - name: Install dependencies
       run: |
-        pip install flake8
-        flake8 voice-recognize --show-source
-        flake8 dialogue-generation --show-source
+        python -m pip install --upgrade pip
+        pip install flake8 reviewdog
+        
+    - name: Run flake8 with reviewdog
+      run: |
+        flake8 voice-recognize dialogue-generation --show-source > flake8_output.txt || true
+        reviewdog -f=flake8 -name="flake8" -reporter=github-pr-check -level=error < flake8_output.txt
