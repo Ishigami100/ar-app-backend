@@ -1,0 +1,11 @@
+numpy
+pandas
+python-dotenv
+Flask
+whisper
+requests
+googletrans
+uwsgi
+openai
+ffmpeg-python   
+openai-whisper
