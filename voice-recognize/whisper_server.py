@@ -2,9 +2,7 @@ import os
 import subprocess
 import threading
 import time
-import traceback
 
-import openai
 import whisper
 from flask import Flask, jsonify, redirect, request
 
@@ -23,7 +21,8 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 lock = threading.Lock()
 
 def is_allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+    if "." in filename:
+        return filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route("/")
@@ -34,10 +33,11 @@ def index():
 @app.route("/api/transcribe", methods=["POST"])
 def transcribe():
     time_sta = time.perf_counter()
-    print("start transcribe " + str(time_sta))  # カッコが閉じていない
+    print("start transcribe " + str(time_sta)) 
     file = request.files["file"]
     if file and is_allowed_file(file.filename):
-        filename = str(int(time.time())) + "." + file.filename.rsplit(".", 1)[1].lower()
+        extension =file.filename.rsplit(".", 1)[1].lower()
+        filename = str(int(time.time())) + "." + extension
         print(filename)
         saved_filename = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         print(saved_filename)
@@ -46,12 +46,16 @@ def transcribe():
         try:
             # シェルコマンドを実行し、その出力を取得
             command = f"whisper {saved_filename} --language ja"
-            result = subprocess.run(command, shell=True, capture_output=True, text=True)
+            result = subprocess.run(
+                command,
+                shell=True,
+                capture_output=True,
+                text=True)
             if result.returncode != 0:
                 raise Exception(f"Whisper command failed: {result.stderr}")
 
             output = result.stdout
-            elapsed_time = time.perf_counter() - time_sta  # タイポ修正
+            elapsed_time = time.perf_counter() - time_sta
             print("time=" + str(elapsed_time))
             print(output)
             basename = filename.split(".")[0]
