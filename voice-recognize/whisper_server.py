@@ -8,12 +8,6 @@ import openai
 import whisper
 from flask import Flask, jsonify, redirect, request
 
-# .envファイルの内容を読み込見込む
-# load_dotenv()
-
-# 自分のBotのアクセストークンに置き換えてください
-# TOKEN = os.environ['OPENAI_ACCESS_TOKEN']
-# openai.api_key = TOKEN
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {"m4a", "mp3", "wav"}
 WHISPER_MODEL_NAME = "small"  # tiny, base, small, medium
@@ -27,7 +21,6 @@ app = Flask(__name__, static_url_path="/")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 lock = threading.Lock()
-
 
 def is_allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -51,7 +44,6 @@ def transcribe():
         file.save(saved_filename)
         lock.acquire()
         try:
-            print("a")
             # シェルコマンドを実行し、その出力を取得
             command = f"whisper {saved_filename} --language ja"
             result = subprocess.run(command, shell=True, capture_output=True, text=True)
@@ -75,22 +67,6 @@ def transcribe():
         print("Invalid file format")
         return jsonify({"error": "Invalid file format"}), 400
 
-
-@app.route("/api/respond_text", methods=["POST"])
-def respond_text():
-    print("start respond_text")
-    # POSTリクエストからJSONデータを取得
-    request_data = request.get_json()
-    if request_data is None:
-        return jsonify({"error": "No JSON data received"}), 400
-
-    # レスポンスデータを作成
-    response_data = {"text": "うまくいってます"}
-
-    # レスポンスデータをJSON形式で返す
-    return jsonify(response_data), 200
-
-
 # ファイルを削除する関数
 def remove_files_with_base_name(base_name):
     extensions_to_remove = [".txt", ".srt", ".tsv", ".vtt", ".json"]
@@ -98,10 +74,7 @@ def remove_files_with_base_name(base_name):
         file_path = base_name + extension
         os.remove(file_path)
 
-
-# 削除したいファイル名と拡張子のリスト
-
-# Flaskのみで動作するビルトインサーバーを起動する※ローカルで動かす時用
+# Flaskのみで動作するビルトインサーバーを起動する
 if __name__ == "__main__":
     PORT = 5000
     app.run(
