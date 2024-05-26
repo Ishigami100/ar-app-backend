@@ -13,7 +13,6 @@ TOKEN = os.environ["OPENAI_ACCESS_TOKEN"]
 openai.api_key = TOKEN
 app = Flask(__name__, static_url_path="/")
 
-
 @app.route("/api/respond_text", methods=["POST"])
 def respond_text():
     print("start respond_text")
@@ -33,7 +32,6 @@ def respond_text():
     )
     print(res["choices"][0]["message"]["content"])
 
-    # 英語→日本語の翻訳
     translator = Translator(from_lang="en", to_lang="ja")
     text = res["choices"][0]["message"]["content"]
     respond_data_text = translator.translate(text)
