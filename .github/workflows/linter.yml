@@ -14,15 +14,21 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }} # Python環境のセットアップ
-      uses: actions/setup-python@v4 # Python環境のセットアップアクションを使用
+    
+    - uses: actions/setup-python@v4 # Python環境のセットアップアクションを使用
       with:
           python-version: ${{ matrix.python-version }} # マトリクスで指定されたPythonバージョンを使用
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 reviewdog
+        pip install flake8
         
     - name: Run flake8 with reviewdog
-      run: |
-        flake8 voice-recognize dialogue-generation --show-source > flake8_output.txt || true
-        reviewdog -f=flake8 -name="flake8" -reporter=github-pr-check -level=error < flake8_output.txt
+      uses: reviewdog/action-flake8@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        level: error
+        reporter: github-pr-check
+        fail_on_error: true
+        path: "voice-recognize dialogue-generation"
