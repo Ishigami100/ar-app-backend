@@ -6,4 +6,4 @@ requests
 googletrans
 uwsgi
 openai
-
+translate

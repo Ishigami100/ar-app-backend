@@ -3,6 +3,7 @@ import os
 import openai
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request
+from translate import Translator
 
 # .envファイルの内容を読み込見込む
 load_dotenv()
@@ -11,8 +12,6 @@ load_dotenv()
 TOKEN = os.environ["OPENAI_ACCESS_TOKEN"]
 openai.api_key = TOKEN
 app = Flask(__name__, static_url_path="/")
-
-
 @app.route("/api/respond_text", methods=["POST"])
 def respond_text():
     print("start respond_text")
@@ -34,7 +33,8 @@ def respond_text():
 
     # 英語→日本語の翻訳
     translator = Translator(from_lang="en", to_lang="ja")
-    respond_data_text = translator.translate(res["choices"][0]["message"]["content"])
+    text=res["choices"][0]["message"]["content"]
+    respond_data_text = translator.translate(text)
     print("ja" + respond_data_text)
 
     # レスポンスデータを作成
