@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app-nginx
-          image: asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/app-repo/app-nginx:1.0.0
+          image: asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/ar-app-backend/app-nginx:1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 80
