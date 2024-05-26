@@ -1,7 +1,7 @@
 version: '3'
 services:
-  app:
-    hostname: app-server
+  voice-recognize-app:
+    hostname: voice-recognize-app-server
     build: ./app
     volumes:
       - ./app:/app
@@ -9,6 +9,19 @@ services:
     container_name: 'app-server'
     ports:
       - '5000:5000'
+    networks:
+      - flask-app-network
+    command: uwsgi --ini /app/uwsgi.ini
+
+  dialogue-generation:
+    hostname: dialogue-generation-app-server
+    build: ./app
+    volumes:
+      - ./app:/app
+      - socket:/tmp
+    container_name: 'app-server'
+    ports:
+      - '5001:5001'
     networks:
       - flask-app-network
     command: uwsgi --ini /app/uwsgi.ini
