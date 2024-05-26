@@ -11,11 +11,7 @@ ALLOWED_EXTENSIONS = {"m4a", "mp3", "wav"}
 WHISPER_MODEL_NAME = "small"  # tiny, base, small, medium
 WHISPER_DEVICE = "cpu"  # cpu, cuda
 
-args = {
-    "shell": True,
-    "capture_output": True,
-    "text": True
-}
+args = {"shell": True, "capture_output": True, "text": True}
 
 print("loading whisper model", WHISPER_MODEL_NAME, WHISPER_DEVICE)
 whisper_model = whisper.load_model(WHISPER_MODEL_NAME, device=WHISPER_DEVICE)
