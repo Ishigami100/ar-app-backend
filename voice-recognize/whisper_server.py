@@ -47,11 +47,7 @@ def transcribe():
         try:
             # シェルコマンドを実行し、その出力を取得
             command = f"whisper {saved_filename} --language ja"
-            result = subprocess.run(
-                command,
-                shell=True,
-                capture_output=True,
-                text=True)
+            result = subprocess.run(command, shell=True, capture_output=True, text=True)
             if result.returncode != 0:
                 raise Exception(f"Whisper command failed: {result.stderr}")
 
