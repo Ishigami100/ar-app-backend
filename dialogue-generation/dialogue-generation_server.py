@@ -2,7 +2,7 @@ import os
 
 import openai
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, request
 
 # .envファイルの内容を読み込見込む
 load_dotenv()
@@ -12,20 +12,16 @@ TOKEN = os.environ["OPENAI_ACCESS_TOKEN"]
 openai.api_key = TOKEN
 app = Flask(__name__, static_url_path="/")
 
-
 @app.route("/api/respond_text", methods=["POST"])
 def respond_text():
     print("start respond_text")
-    # POSTリクエストからJSONデータを取得
     request_data = request.get_json()
     if request_data is None:
         return jsonify({"error": "No JSON data received"}), 400
     print(request_data)
-    # 日本語→英語の翻訳
     translator = Translator(from_lang="ja", to_lang="en")
     result = translator.translate(request_data["text"])
     print("en" + result)
-    # chatGPTを呼ぶ
     res = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
