@@ -1,6 +1,7 @@
 name: Format code # ワークフローの名前を指定
 
 on: # トリガー条件を指定
+  workflow_dispatch: # 手動でのワークフロートリガーを許可
   pull_request: # プルリクエストに反応
     types: [opened, synchronize] # プルリクエストがオープン、更新された場合にトリガー
 

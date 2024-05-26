@@ -1,6 +1,7 @@
 name: Linter
 
 on:
+  workflow_dispatch: # 手動でのワークフロートリガーを許可
   pull_request:
     types: [opened, synchronize]
 
