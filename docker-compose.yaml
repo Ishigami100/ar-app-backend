@@ -2,11 +2,11 @@ version: '3'
 services:
   voice-recognize-app:
     hostname: voice-recognize-app-server
-    build: ./app
+    build: ./voice-recognize
     volumes:
-      - ./app:/app
+      - ./voice-recognize:/app
       - socket:/tmp
-    container_name: 'app-server'
+    container_name: 'voice-recognize-app-server'
     ports:
       - '5000:5000'
     networks:
@@ -15,11 +15,11 @@ services:
 
   dialogue-generation:
     hostname: dialogue-generation-app-server
-    build: ./app
+    build: ./dialogue-generation
     volumes:
-      - ./app:/app
+      - ./dialogue-generation:/app
       - socket:/tmp
-    container_name: 'app-server'
+    container_name: 'dialogue-generation-app-server'
     ports:
       - '5001:5001'
     networks:
