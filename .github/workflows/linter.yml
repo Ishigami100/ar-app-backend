@@ -17,6 +17,8 @@ jobs:
       uses: actions/setup-python@v4 # Python環境のセットアップアクションを使用
       with:
           python-version: ${{ matrix.python-version }} # マトリクスで指定されたPythonバージョンを使用
+    - name: check
+      run: ls
     - name: Lint
       run: |
         pip install flake8
