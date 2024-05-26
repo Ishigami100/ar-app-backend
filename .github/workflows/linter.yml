@@ -31,6 +31,4 @@ jobs:
         level: error
         reporter: github-pr-check
         fail_on_error: true
-        reporter: github-pr-check
-        fail_on_error: true
         path: "voice-recognize dialogue-generation"
