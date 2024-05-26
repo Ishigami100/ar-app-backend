@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dialogue-generation-app-server
+spec:
+  selector:
+    matchLabels:
+      app: dialogue-generation-app-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dialogue-generation-app-server
+    spec:
+      containers:
+        - name: dialogue-generation-app-server
+          image: asia-northeast1-docker.pkg.dev/gcp-compute-engine-343613/ar-app-backend/dialogue-generation-app-server:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
