@@ -33,3 +33,13 @@ jobs:
         fail_on_error: true
         path: "voice-recognize dialogue-generation"
         filter_mode: "nofilter"
+        
+    - name: Run flake8 with reviewdog (PR Review)
+      uses: reviewdog/action-flake8@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        level: error
+        reporter: github-pr-review
+        fail_on_error: true
+        path: "voice-recognize dialogue-generation"
+        filter_mode: "nofilter"
