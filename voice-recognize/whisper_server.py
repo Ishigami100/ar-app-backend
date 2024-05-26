@@ -20,6 +20,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 lock = threading.Lock()
 
+
 def is_allowed_file(filename):
     if "." in filename:
         return filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -71,12 +72,14 @@ def transcribe():
         print("Invalid file format")
         return jsonify({"error": "Invalid file format"}), 400
 
+
 # ファイルを削除する関数
 def remove_files_with_base_name(base_name):
     extensions_to_remove = [".txt", ".srt", ".tsv", ".vtt", ".json"]
     for extension in extensions_to_remove:
         file_path = base_name + extension
         os.remove(file_path)
+
 
 # Flaskのみで動作するビルトインサーバーを起動する
 if __name__ == "__main__":
