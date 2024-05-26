@@ -13,6 +13,7 @@ TOKEN = os.environ["OPENAI_ACCESS_TOKEN"]
 openai.api_key = TOKEN
 app = Flask(__name__, static_url_path="/")
 
+
 @app.route("/api/respond_text", methods=["POST"])
 def respond_text():
     print("start respond_text")
